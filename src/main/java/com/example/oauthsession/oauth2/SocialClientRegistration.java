@@ -11,7 +11,7 @@ public class SocialClientRegistration {
     @Value("${nname}")
     private String nClientId;
 
-    @Value("${nname}")
+    @Value("${npassword}")
     private String nClientSecret;
 
     @Value("${gname}")
@@ -19,6 +19,12 @@ public class SocialClientRegistration {
 
     @Value("${gpassword}")
     private String gClientSecret;
+
+    @Value("${kname}")
+    private String kClientId;
+
+    @Value("${kpassword}")
+    private String kClientSecret;
 
     public ClientRegistration naverClientRegistration() {
 
@@ -51,4 +57,18 @@ public class SocialClientRegistration {
                 .userNameAttributeName(IdTokenClaimNames.SUB)
                 .build();
     }
+    public ClientRegistration kakaoClientRegistration() {
+        return ClientRegistration.withRegistrationId("kakao")
+                .clientId(kClientId)
+                .redirectUri("http://localhost:8080/login/oauth2/code/kakao")
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .scope("profile_nickname", "account_email")
+                .authorizationUri("https://kauth.kakao.com/oauth/authorize")
+                .tokenUri("https://kauth.kakao.com/oauth/token")
+                .userInfoUri("https://kapi.kakao.com/v2/user/me")
+                .userNameAttributeName("id")
+                .build();
+    }
+
 }
+

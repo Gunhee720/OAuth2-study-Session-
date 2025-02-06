@@ -1,9 +1,6 @@
 package com.example.oauthsession.service;
 
-import com.example.oauthsession.dto.CustomOAuth2User;
-import com.example.oauthsession.dto.GoogleResponse;
-import com.example.oauthsession.dto.NaverResponse;
-import com.example.oauthsession.dto.OAuth2Response;
+import com.example.oauthsession.dto.*;
 import com.example.oauthsession.entity.UserEntity;
 import com.example.oauthsession.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +26,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         System.out.println(oAuth2User.getAttributes());
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        System.out.println("registrationId: " + registrationId);
         OAuth2Response oAuth2Response = null;
         if (registrationId.equals("naver")) {
 
@@ -36,6 +34,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
         else if (registrationId.equals("google")) {
             oAuth2Response = new GoogleResponse(oAuth2User.getAttributes());
+        }
+        else if (registrationId.equals("kakao")){
+            oAuth2Response = new KakaoResponse(oAuth2User.getAttributes());
+            System.out.println("카카오로 유저정보 받음"+oAuth2Response.getEmail()+oAuth2Response.getName()+oAuth2Response.getProviderId());
         }
         else {
 
